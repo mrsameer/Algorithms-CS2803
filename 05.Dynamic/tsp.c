@@ -50,6 +50,35 @@ int tsp(int mask, int pos)
     return dp[mask][pos] = ans; 
 }
 
+void tour ()
+{
+    printf("The tour is: %d", 0); 
+    int mask = (1<<N)-1 ; // final state
+
+    int arr[N+1]; 
+    int lastIndex = 0; // source and destination is 0
+    for (int i = N-1; i >= 1; i--)
+    {
+        int index = -1; 
+        for (int j = 0; j < N; j++)
+        {
+            // if j == 0 source node or not in visited set then continue
+            if (j == 0 || (mask & (1<<j)) == 0) continue; 
+            if (index == -1) index = j;     // update index if it is first 
+            int prevDist = dp[index][mask] + dist[index][lastIndex]; 
+            int newDist = dp[j][mask] + dist[j][lastIndex]; 
+            if (newDist < prevDist) index = j; 
+        }
+        arr[i] = index; 
+        mask = mask ^ (1 << index); 
+        lastIndex = index; 
+    }
+
+    arr[N] = 0; 
+    for (int i = 1; i <= N; i++) printf("->%d", arr[i]); 
+    printf("\n");
+}
+
 int main(int argc, char const *argv[])
 {
     // fill dp table with -1 
@@ -57,6 +86,8 @@ int main(int argc, char const *argv[])
         for (int j = 0; j < N; j++)
             dp[i][j] = -1; 
 
-    printf("Tsp(1,0) = Minimum weight hamiltonian path cost = %d\n", tsp(1, 0)); 
+    int result = tsp(1, 0); 
+    printf("Tsp(1,0) = Minimum weight hamiltonian path cost = %d\n", result); 
+    tour(); 
     return 0;
 }

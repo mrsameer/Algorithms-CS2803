@@ -7,6 +7,20 @@ struct node {
     struct node *left, *right; 
 }typedef Node; 
 
+Node* search(Node* root, int key) 
+{ 
+    // Base Cases: root is null or key is present at root 
+    if (root == NULL || root->key == key) 
+       return root; 
+     
+    // Key is greater than root's key 
+    if (root->key < key) 
+       return search(root->right, key); 
+  
+    // Key is smaller than root's key 
+    return search(root->left, key); 
+}
+
 Node* insert(Node *root, int key)
 {
     if (root == NULL)
@@ -106,7 +120,7 @@ int main(int argc, char const *argv[])
     bool quit = false; 
     while (!quit)
     {
-        printf("Select\n1.Insert\n2.Delete\n3.Inorder Traversal\n4.PostOrder Traversal\n5.PreOrderTraversal\n6.Quit\n"); 
+        printf("Select\n1.Insert\n2.Delete\n3.Inorder Traversal\n4.PostOrder Traversal\n5.PreOrderTraversal\n6.Search\n7.Quit\n"); 
         scanf("%d", &selection);
         switch (selection)
         {
@@ -129,7 +143,18 @@ int main(int argc, char const *argv[])
         case 5:
             preorder(root);
             break;
+        
         case 6:
+            printf("Enter the key to search: "); 
+            scanf("%d", &ele); 
+            if (search(root, ele))
+            {
+               printf("Found"); 
+            }
+            else 
+                printf("Not found"); 
+            
+        case 7:
             quit = true; 
             break;
         default:

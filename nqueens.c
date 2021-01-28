@@ -39,7 +39,7 @@ void queen(int N)
 
     int row = 1;  // column number of queen
 
-    board[row] = 0;   // initially queen 1 is at column 0 in chess board
+    board[row] = 0;   // initially queen 1 is at column 0 (it is nowhere)  in chess board
 
     // row varies from 1 to N (and it is nothing but position of queen columnwise in a row)
     // as we dedicate each row for each qeen 
